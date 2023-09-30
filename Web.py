@@ -16,20 +16,13 @@ print ('the web server is up on port:', serverPort)
 
 while True:
 	#Establish the connection
-
 	print ('Ready to serve...')
-
 	# Set up a new connection from the client
 	connectionSocket, addr =serverSocket.accept() #Fill in start   #Fill in end
-
 	try:
-
 		message =connectionSocket.recv(1024)  #Fill in start #Fill in end
-
-		filename = message.split()[1]
-		
+		filename = message.split()[1]	
 		f = open(filename[1:])
-
 		outputdata =f.read() #Fill in start #Fill in end
 		print (outputdata)
 		#Send one HTTP header line into socket
