@@ -1,15 +1,15 @@
 from socket import *
 from base64 import *
 import ssl
+import sys
 #add in prompt
 userEmail = input("Enter Your Email Address: ")
 userPassword = input("Enter Your Password: ")
+sys.stdout.write("\033[F")  # Cursor up one line
+print("Enter Your Password: [Password won't be echoed back for security reasons]")
 userDestinationEmail = input("Enter Email Destination: ")
 userSubject = input("Enter Subject: ")
 userBody = input("Enter Message: ")
-
-
-
 
 msg = '{}.\r\n I love computer networks!'.format(userBody)
 endmsg = "\r\n.\r\n"
@@ -42,34 +42,24 @@ if revc2[:3].decode() != '220':
     clientSocket.close()
     exit()
 
-
-
 sslClientSocket = ssl.wrap_socket(clientSocket)
-
 
 emailA = b64encode(userEmail.encode())
 emailP = b64encode(userPassword.encode())
 
-
 authorizationCMD = "AUTH LOGIN\r\n"
-
 
 sslClientSocket.send(authorizationCMD.encode())
 recv2 = sslClientSocket.recv(1024)
 print(recv2)
 
-
 sslClientSocket.send(emailA + "\r\n".encode())
 recv3 = sslClientSocket.recv(1024)
 print(recv3)
 
-
 sslClientSocket.send(emailP + "\r\n".encode())
 recv4 = sslClientSocket.recv(1024)
 print(recv4)
-
-
-
 
 # Send MAIL FROM command and print server response.
 # Fill in start
@@ -108,7 +98,6 @@ quitCMD = 'QUIT\r\n'
 sslClientSocket.send(quitCMD.encode())
 recv9 = sslClientSocket.recv(1024)
 print(recv9)
-
 
 sslClientSocket.close()
 clientSocket.close()
